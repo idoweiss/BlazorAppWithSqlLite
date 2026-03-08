@@ -1,0 +1,95 @@
+﻿@page "/users"
+@rendermode InteractiveServer
+
+<h3>Users</h3>
+<p />
+<table class="table table-success table-bordered table-striped table-hover table-sm">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < userNames.Count; i++)
+        {
+            <tr>
+                <td>
+                    @(i + 1)
+                </td>
+                <td>
+                    @userNames[i]
+                </td>
+                <td>
+                    @emails[i]
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<text>Name:</text>
+<input @bind-value="newUserName" />
+<p />
+<text>Email:</text>
+<input @bind-value="newEmail" />
+<p />
+<button class="btn btn-primary" @onclick="AddUser">Add User</button>
+<p />
+<hr>
+<text>Id:</text>
+<input type="number" @bind-value="UpdateId" />
+<p />
+<text>Name:</text>
+<input @bind-value="updatedUserName" />
+<p />
+<text>Email:</text>
+<input @bind-value="updatedEmail" />
+<p />
+<button class="btn btn-success" @onclick="UpdateUser">Update User</button>
+<p />
+<hr>
+<text>Id:</text>
+<input type="number" @bind-value="deleteId" />
+<p />
+<button class="btn btn-danger" @onclick="DeleteUser">Delete User</button>
+<p />
+
+@code {
+    List<string> userNames = new() { "Tom Cruise", "Leonardo Decaprio", "Brad Pitt" };
+    List<string> emails = new() { "tom.cruise@gmail.com", "leonardo.decaprio@gmail.com", "brad.pitt@gmail.com" };
+
+    int UpdateId;
+    int deleteId;
+    string newUserName = "";
+    string newEmail = "";
+
+    string updatedUserName = "";
+    string updatedEmail = "";
+
+    int valueFromInput = 3;
+
+    void AddUser()
+    {
+        userNames.Add(newUserName);
+        emails.Add(newEmail);
+    }
+
+    void UpdateUser()
+    {
+        userNames[UpdateId - 1] = updatedUserName;
+        emails[UpdateId - 1] = updatedEmail;
+    }
+
+    void DeleteUser()
+    {
+        userNames.RemoveAt(deleteId - 1);
+        emails.RemoveAt(deleteId - 1);
+    }
+}
